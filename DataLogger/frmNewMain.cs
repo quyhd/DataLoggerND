@@ -150,6 +150,7 @@ namespace DataLogger
 
         private void frmNewMain_Load(object sender, EventArgs e)
         {
+
             frmConfiguration.protocol = new Form1(this);
             GlobalVar.maintenanceLog = new maintenance_log();
 
@@ -451,9 +452,10 @@ namespace DataLogger
                     }
                 }
                 // 50 seconds save current time to datavalue table
-                if (countingIndex5Minute < 2)
+                if (countingIndex5Minute < 1)
                 {
                     countingIndex5Minute++;
+                    Console.WriteLine("countingIndex5Minute :" + countingIndex5Minute);
                     return;
                 }
                 else
@@ -639,6 +641,7 @@ namespace DataLogger
             }
             catch (Exception e)
             {
+
             }
         }
         private void tmrThreadingTimerFor60Minute_TimerCallback(object state)
@@ -746,10 +749,10 @@ namespace DataLogger
                             variable = data.Split(separatorsENDLINE, StringSplitOptions.RemoveEmptyEntries);
                             variable = variable.Skip(1).ToArray();
                             //
-                            foreach (var word in variable)
-                            {
-                                Console.WriteLine(word);
-                            }
+                            //foreach (var word in variable)
+                            //{
+                            //    Console.WriteLine(word);
+                            //}
                             //Console.ReadLine();
                         }
                         for (int k = 0; k < variable.Length; k++)
@@ -821,12 +824,12 @@ namespace DataLogger
                         //obj.var4 = double.Parse(words[59].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //Luu Luong
                         //obj.var5 = double.Parse(words[71].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //Temp
                         //obj.var6 = double.Parse(words[77].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //pH
-                        //Console.WriteLine("COD ---" + obj.var1);
-                        //Console.WriteLine("Color ---" + obj.var2);
-                        //Console.WriteLine("TSS ---" + obj.var3);
-                        //Console.WriteLine("LL ---" + obj.var4);
-                        //Console.WriteLine("Temp ---" + obj.var5);
-                        //Console.WriteLine("pH ---" + obj.var6);
+                        Console.WriteLine("COD ---" + obj.var1);
+                        Console.WriteLine("Color ---" + obj.var2);
+                        Console.WriteLine("TSS ---" + obj.var3);
+                        Console.WriteLine("LL ---" + obj.var4);
+                        Console.WriteLine("Temp ---" + obj.var5);
+                        Console.WriteLine("pH ---" + obj.var6);
                         obj.MPS_status = 0;
                         obj.latest_update_MPS_communication = DateTime.Now;
                         objRawdata.MPS_status = 0;
@@ -916,10 +919,10 @@ namespace DataLogger
                                 }
                             }
                             data = System.Text.Encoding.ASCII.GetString(dataarray, 0, dataarray.Length);
-
+                            Console.WriteLine("data :" + data);
                             //
                             string[] separators = { "\t", "\n" };
-                            words = data.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                            //words = data.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                             //
                             //foreach (var word in words)
                             //{
@@ -931,18 +934,25 @@ namespace DataLogger
                             variable = data.Split(separatorsENDLINE, StringSplitOptions.RemoveEmptyEntries);
                             variable = variable.Skip(1).ToArray();
                             //
-                            foreach (var word in variable)
-                            {
-                                Console.WriteLine(word);
-                            }
+                            //for (int l = 0; l < variable.Length; l++)
+                            //{
+                            //    Console.WriteLine("+++" + l);
+                            //    Console.WriteLine(variable[l]);
+                            //}
                             //Console.ReadLine();
                         }
                         for (int k = 0; k < variable.Length; k++)
                         {
+                            //Console.WriteLine("---" + k);
+                            //Console.WriteLine(variable[k]);
                             string[] separatorsTAB = { "\t" };
                             variableData = variable[k].Split(separatorsTAB, StringSplitOptions.RemoveEmptyEntries);
+                            //
+
                             //Lay ID nhan duoc tu GO
                             string ID = variableData[0].Substring(19, variableData[0].Length - 19);
+                            //
+                            //Console.WriteLine("ID :" + ID);
                             //Tim ID giong voi ID lay tu GO trong database
                             IEnumerable<module> moduleID = moduleConfigList.Where(t => t.sensorId.Equals(ID));
 
@@ -950,7 +960,7 @@ namespace DataLogger
                             {
                                 string varNo = moduleID.First().item_name;
                                 double doubleData = double.Parse(variableData[1].Substring(0, variableData[1].IndexOf("[")).Trim());
-
+                                //Console.WriteLine("doubleData :" + doubleData);
                                 Type type = typeof(measured_data);
                                 //object instance = Activator.CreateInstance(type);
                                 //PropertyInfo prop = type.GetProperty(property);
@@ -958,12 +968,16 @@ namespace DataLogger
                                 //Console.WriteLine(((Foo)instance).Bar);
                                 for (int m = 0; m < field.Length; m++)
                                 {
+                                    //Console.WriteLine("Field m :" + m + " : " + field[m].Name);
                                     string variableField = field[m].Name.Substring(field[m].Name.IndexOf("<") + 1, field[m].Name.IndexOf(">") - field[m].Name.IndexOf("<") - 1);
+                                    //Console.WriteLine("Field m substring :" + m + " : " + variableField);
                                     if (varNo.Equals(variableField))
                                     {
                                         PropertyInfo prop = type.GetProperty(variableField);
                                         prop.SetValue(objRawdata, doubleData, null);
-                                        doubleData = Calculator(doubleData, moduleID.First());
+
+                                        //doubleData = Calculator(doubleData, moduleID.First());
+
                                         prop.SetValue(obj, doubleData, null);
                                     }
                                 }
@@ -1006,12 +1020,12 @@ namespace DataLogger
                         //obj.var4 = double.Parse(words[59].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //Luu Luong
                         //obj.var5 = double.Parse(words[71].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //Temp
                         //obj.var6 = double.Parse(words[77].Substring(0, 6).Trim(), System.Globalization.CultureInfo.InvariantCulture); //pH
-                        //Console.WriteLine("COD ---" + obj.var1);
-                        //Console.WriteLine("Color ---" + obj.var2);
-                        //Console.WriteLine("TSS ---" + obj.var3);
-                        //Console.WriteLine("LL ---" + obj.var4);
-                        //Console.WriteLine("Temp ---" + obj.var5);
-                        //Console.WriteLine("pH ---" + obj.var6);
+                        Console.WriteLine("COD ---" + obj.var1);
+                        Console.WriteLine("Color ---" + obj.var2);
+                        Console.WriteLine("TSS ---" + obj.var3);
+                        Console.WriteLine("LL ---" + obj.var4);
+                        Console.WriteLine("Temp ---" + obj.var5);
+                        Console.WriteLine("pH ---" + obj.var6);
                         obj.MPS_status = 0;
                         obj.latest_update_MPS_communication = DateTime.Now;
                         objRawdata.MPS_status = 0;
@@ -1030,7 +1044,7 @@ namespace DataLogger
                 }
                 catch (Exception ex)
                 {
-                    //Console.Write(ex.StackTrace);
+                    Console.Write(ex.StackTrace);
                     objRawdata = new measured_data();
                 }
             }
@@ -1128,7 +1142,15 @@ namespace DataLogger
         private double Calculator(double D, module mod)
         {
             double A;
-            A = (Double)((mod.output_min - mod.output_max) / (mod.input_min - mod.input_max)) * (Double)(D - mod.input_min) + mod.output_min + mod.off_set;
+            try
+            {           
+                A = (Double)((mod.output_min - mod.output_max) / (mod.input_min - mod.input_max)) * (Double)(D - mod.input_min) + mod.output_min + mod.off_set;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Message);
+                return -1;
+            }
             return A;
         }
         public void updateMeasuredDataValue(measured_data obj)
@@ -1720,7 +1742,7 @@ namespace DataLogger
                     return;
                 }
             }
-            frmConfiguration frmConfig = new frmConfiguration(lang);
+            frmConfiguration frmConfig = new frmConfiguration(lang,this);
             frmConfig.ShowDialog();
             initConfig(true);
         }

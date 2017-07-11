@@ -105,7 +105,7 @@ namespace WinformProtocol
             textServerFTP.Text = existedStationsSetting.ftpserver;
             textUserFTP.Text = existedStationsSetting.ftpusername;
             textFolderFTP.Text = existedStationsSetting.ftpfolder;
-
+            //AppendTextBox(Environment.NewLine + "test", form1, 0);
 
             btnListen.PerformClick();
 
@@ -129,13 +129,20 @@ namespace WinformProtocol
         }
         async void btnListen_Click(object sender, EventArgs e)
         {
-            isStop = false;
-            textIP.Enabled = false;
-            textPort.Enabled = false;
-            btnListen.Enabled = false;
-            btnRefesh.Enabled = false;
-            Control control = new Control(this);
-            control.StartListening(Convert.ToInt32(textPort.Text), localAddr);
+            try
+            {
+                isStop = false;
+                textIP.Enabled = false;
+                textPort.Enabled = false;
+                btnListen.Enabled = false;
+                btnRefesh.Enabled = false;
+                Control control = new Control(this);
+                control.StartListening(Convert.ToInt32(textPort.Text), localAddr);
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Click" + ex.StackTrace);
+                Console.WriteLine("Click " + ex.Message);
+            }
         }
 
         private void btnRefesh_Click(object sender, EventArgs e)
@@ -1968,7 +1975,7 @@ namespace WinformProtocol
             }
             catch (Exception e)
             {
-                AppendTextBox(Environment.NewLine + e.StackTrace, form1, 0);
+                //AppendTextBox(Environment.NewLine + e.StackTrace, form1, 0);
                 Console.WriteLine(e.ToString());
             }
         }

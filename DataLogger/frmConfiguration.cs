@@ -39,7 +39,7 @@ namespace DataLogger
             InitializeComponent();
         }
 
-        public frmConfiguration(LanguageService _lang)
+        public frmConfiguration(LanguageService _lang, frmNewMain newmain)
         {
             InitializeComponent();
             lang = _lang;
