@@ -17,6 +17,7 @@ namespace DataLogger.Entities
         public string ftpfolder { get; set; }
         public string ftppassword { get; set; }
         public int ftpflag { get; set; }
+        public string goip { get; set; }
         public station()
         {
             id = -1;
@@ -29,6 +30,7 @@ namespace DataLogger.Entities
             ftpfolder = "";
             ftppassword = "";
             ftpflag = -1;
+            goip = "192.168.1.1";
         }
     }
 }

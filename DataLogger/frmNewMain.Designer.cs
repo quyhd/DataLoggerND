@@ -154,7 +154,7 @@
             this.panel30.Location = new System.Drawing.Point(76, 57);
             this.panel30.Margin = new System.Windows.Forms.Padding(10);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(716, 424);
+            this.panel30.Size = new System.Drawing.Size(714, 424);
             this.panel30.TabIndex = 65;
             // 
             // Unit3
@@ -653,6 +653,7 @@
             this.var2Text.Size = new System.Drawing.Size(77, 36);
             this.var2Text.TabIndex = 46;
             this.var2Text.Text = "var2";
+            this.var2Text.Click += new System.EventHandler(this.var2Text_Click);
             // 
             // var6Text
             // 
@@ -799,10 +800,10 @@
             // panel21
             // 
             this.panel21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel21.Location = new System.Drawing.Point(805, 494);
+            this.panel21.Location = new System.Drawing.Point(803, 494);
             this.panel21.Name = "panel21";
             this.tableLayoutPanel1.SetRowSpan(this.panel21, 2);
-            this.panel21.Size = new System.Drawing.Size(539, 227);
+            this.panel21.Size = new System.Drawing.Size(541, 227);
             this.panel21.TabIndex = 71;
             // 
             // pnHeader
@@ -901,15 +902,15 @@
             this.panel23.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel23.Location = new System.Drawing.Point(69, 494);
             this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(730, 161);
+            this.panel23.Size = new System.Drawing.Size(728, 161);
             this.panel23.TabIndex = 70;
             // 
             // panel24
             // 
             this.panel24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel24.Location = new System.Drawing.Point(805, 50);
+            this.panel24.Location = new System.Drawing.Point(803, 50);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(539, 438);
+            this.panel24.Size = new System.Drawing.Size(541, 438);
             this.panel24.TabIndex = 72;
             // 
             // tableLayoutPanel1
@@ -917,7 +918,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.26636F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.73364F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 544F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 546F));
             this.tableLayoutPanel1.Controls.Add(this.panel24, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel23, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.pnHeader, 0, 0);

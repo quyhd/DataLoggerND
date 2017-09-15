@@ -28,7 +28,7 @@ namespace Protocol
         public static System.IO.Ports.SerialPort serialPortTP;
         public static System.IO.Ports.SerialPort serialPortSAMP;
         //public static NpgsqlConnection _conn;
-        private const string connstring = @"Server=localhost;Port=5432;User Id=postgres;Password=123;Database=DataLoggerDB;";
+        private const string connstring = @"Server=localhost;Port=5432;User Id=postgres;Password=123;Database_ND;";
         static int counter = 0;
         static Thread newThread = null;
         //TcpClient client = null;
@@ -1274,7 +1274,7 @@ namespace Protocol
         {
             try
             {
-                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB";
+                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB_ND";
                 NpgsqlConnection conn = new NpgsqlConnection(connstring);
                 conn.Open();
                 newpass = Crypto.HashPassword(newpass);

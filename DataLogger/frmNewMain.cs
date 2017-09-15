@@ -183,6 +183,7 @@ namespace DataLogger
             GlobalVar.moduleSettings = new module_repository().get_all();
 
             label9.Text = Convert.ToString(GlobalVar.stationSettings.station_name);
+
             for (int i = 1; i <= GlobalVar.moduleSettings.Count(); i++)
             {
                 foreach (var item in GlobalVar.moduleSettings)
@@ -197,6 +198,7 @@ namespace DataLogger
                     }
                 }
             }
+
             if (init(isConfigCOM))
             {
             }
@@ -669,7 +671,7 @@ namespace DataLogger
                 }
             }
         }
-        public measured_data getsensordataTCE(out measured_data objRawdata)
+        public measured_data getsensordata(out measured_data objRawdata)
         {
             //saved = false;
             measured_data obj = new measured_data();
@@ -684,7 +686,9 @@ namespace DataLogger
                 IEnumerable<module> moduleConfigList = _modules.get_all();
                 try
                 {
-                    IPAddress localAddr = IPAddress.Parse("192.168.1.168");
+                    //IPAddress localAddr = IPAddress.Parse("192.168.1.167");
+                    GlobalVar.stationSettings = new station_repository().get_info();
+                    IPAddress localAddr = IPAddress.Parse(GlobalVar.stationSettings.goip);
                     Int32 port = 14111;
                     string data;
                     TcpClient client = new TcpClient();
@@ -854,7 +858,7 @@ namespace DataLogger
             }
             return obj;
         }
-        public measured_data getsensordata(out measured_data objRawdata)
+        public measured_data getsensordata1(out measured_data objRawdata)
         {
             //saved = false;
             measured_data obj = new measured_data();
@@ -869,7 +873,9 @@ namespace DataLogger
                 IEnumerable<module> moduleConfigList = _modules.get_all();
                 try
                 {
-                    IPAddress localAddr = IPAddress.Parse("192.168.1.168");
+                    GlobalVar.stationSettings = new station_repository().get_info();
+                    //IPAddress localAddr = IPAddress.Parse("192.168.1.168");
+                    IPAddress localAddr = IPAddress.Parse(GlobalVar.stationSettings.goip);
                     Int32 port = 14111;
                     string data;
                     TcpClient client = new TcpClient();
@@ -1143,8 +1149,15 @@ namespace DataLogger
         {
             double A;
             try
-            {           
-                A = (Double)((mod.output_min - mod.output_max) / (mod.input_min - mod.input_max)) * (Double)(D - mod.input_min) + mod.output_min + mod.off_set;
+            {
+                if (mod.input_min - mod.input_max == 0)
+                {
+                    A = (Double)(D - mod.input_min) + mod.output_min + mod.off_set;
+                }
+                else
+                {
+                    A = (Double)((mod.output_min - mod.output_max) / (mod.input_min - mod.input_max)) * (Double)(D - mod.input_min) + mod.output_min + mod.off_set;
+                }
             } catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
@@ -2162,6 +2175,11 @@ namespace DataLogger
                 {
                     ClearLabel(child, text, label);
                 }
+
+        }
+
+        private void var2Text_Click(object sender, EventArgs e)
+        {
 
         }
     }

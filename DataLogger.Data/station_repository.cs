@@ -103,6 +103,7 @@ namespace DataLogger.Data
                                             " ftppassword =:ftppassword, ftpfolder=:ftpfolder," +
                                             " ftpflag =:ftpflag," +
                                             " modified = :modified " +
+                                            //" goip = :goip " +
                                             " where id = :id";
 
                         using (NpgsqlCommand cmd = db._conn.CreateCommand())
@@ -119,6 +120,8 @@ namespace DataLogger.Data
                             cmd.Parameters.Add(":ftppassword", NpgsqlTypes.NpgsqlDbType.Varchar).Value = obj.ftppassword;
                             cmd.Parameters.Add(":ftpfolder", NpgsqlTypes.NpgsqlDbType.Varchar).Value = obj.ftpfolder;
                             cmd.Parameters.Add(":ftpflag", NpgsqlTypes.NpgsqlDbType.Integer).Value = obj.ftpflag;
+
+                            //cmd.Parameters.Add(":goip", NpgsqlTypes.NpgsqlDbType.Varchar).Value = obj.goip;
 
                             cmd.Parameters.Add(":id", NpgsqlTypes.NpgsqlDbType.Integer).Value = obj.id;
 
@@ -405,6 +408,11 @@ namespace DataLogger.Data
                     obj.ftpflag = Convert.ToInt32(dataReader["ftpflag"].ToString().Trim());
                 else
                     obj.ftpflag = -1;
+
+                if (!DBNull.Value.Equals(dataReader["goip"]))
+                    obj.goip = dataReader["goip"].ToString().Trim();
+                else
+                    obj.goip = "";
             }
             catch (Exception ex)
             {

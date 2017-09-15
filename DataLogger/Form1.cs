@@ -473,20 +473,21 @@ namespace WinformProtocol
                             var tableEnumerable = tbcode2.AsEnumerable();
                             var _displayList = tableEnumerable.ToArray();
 
-                            foreach (DataRow row in tbcode.Rows)
+                            foreach (DataRow row in tbcode.Rows) //moi dong trong bang databinding
                             {
                                 string code = Convert.ToString(row["clnnamevalue"]);
                                 int min_value = Convert.ToInt32(row["min_value"]);
-                                for (int i = 0; i < _displayList.Count(); i++)
+                                for (int i = 0; i < _displayList.Count(); i++)  //_displayList : ds modules (chi so)
                                 {
+                                    //voi moi 1 chi so
                                     DataRow currentRow = _displayList[i];
-                                    if (currentRow["item_name"].Equals(code))
+                                    if (currentRow["item_name"].Equals(code)) //neu cot item_name trong bang modules = cot clnnamevalue trong bang databinding
                                     {
-                                        string display_name = currentRow["item_name"].ToString();
+                                        string display_name = currentRow["item_name"].ToString();  //VD : var1
                                         Type _display_nameType = typeof(data_value);
                                         //var display_nameType = Activator.CreateInstance(_display_nameType);
                                         PropertyInfo prop = _display_nameType.GetProperty(display_name);
-                                        double display_var = (double)prop.GetValue(data);
+                                        double display_var = (double)prop.GetValue(data); //VD : lay display_var = data.var1
 
                                         if (Convert.ToDouble(String.Format("{0:0.00}", display_var)) >= min_value)
                                         {
@@ -881,7 +882,7 @@ namespace WinformProtocol
             String measuretime;
             try
             {
-                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB";
+                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB_ND";
                 NpgsqlConnection conn = new NpgsqlConnection(connstring);
                 conn.Open();
                 string sql_command = "SELECT " + time + " from " + table + " order by ID desc limit 1";
@@ -915,7 +916,7 @@ namespace WinformProtocol
             List<byte[]> lstData = new List<byte[]>();
             try
             {
-                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB";
+                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB_ND";
                 NpgsqlConnection conn = new NpgsqlConnection(connstring);
                 conn.Open();
                 string sql_command = "SELECT * from " + table + " WHERE created < " + "\'" + date2 + "\'" + " AND created > " + "\'" + date1 + "\'" + "ORDER BY created ASC";
@@ -1010,7 +1011,7 @@ namespace WinformProtocol
         {
             try
             {
-                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB";
+                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB_ND";
                 NpgsqlConnection conn = new NpgsqlConnection(connstring);
                 conn.Open();
                 string sql_command = "SELECT * from " + table + " order by ID desc limit 1";
@@ -1071,7 +1072,7 @@ namespace WinformProtocol
         {
             try
             {
-                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB";
+                String connstring = "Server = localhost;Port = 5432; User Id = postgres;Password = 123;Database = DataLoggerDB_ND";
                 NpgsqlConnection conn = new NpgsqlConnection(connstring);
                 conn.Open();
                 newpass = Crypto.HashPassword(newpass);
@@ -1918,10 +1919,12 @@ namespace WinformProtocol
             ThreadReclaim = new Thread(new ThreadStart(Reclaim));
             ThreadReclaim.Start();
             Int32 Port = port;
-            IPAddress LocalAddr = localAddr;
+            //IPAddress LocalAddr = localAddr;
+            string localHost = "0.0.0.0";
+            IPAddress _localHost = IPAddress.Parse(localHost);
             try
             {
-                listener = new TcpListener(LocalAddr, Port);
+                listener = new TcpListener(_localHost, Port);
                 listener.Start();
                 await Task.Run(() =>
                 {
@@ -2717,7 +2720,10 @@ namespace WinformProtocol
                 ftpResponse.Close();
                 ftpRequest = null;
             }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            catch (Exception ex)
+            { 
+                //Console.WriteLine(ex.ToString()); 
+            }
             return;
         }
 
